@@ -208,7 +208,7 @@ window.onload = function (){
     }
 
     //Starting page of the game
-    function start_game() {
+    function mainScreen() {
         context.font = '25px nokiafc22'
         context.fillStyle = 'black'
         context.fillText("Click here to start", 200, 220)
@@ -239,6 +239,41 @@ window.onload = function (){
         height:50
     }
 
+    //UI's main/line-button click to start the game
+    document.getElementById("line-button").onclick = function() {ButtonStartGame()};
+
+    const ButtonStartGame = () => {
+        if (!runGame){
+            StartGame()
+        }
+    }
+
+    function StartGame() {
+        console.log("hellow startGame")
+        clearCanvas()
+            //Game is running = true
+            points = 0
+            runGame = true
+            //console.log(mousePos)
+            //console.log(runGame)
+            snake = [
+                {x: 200, y: 200},
+                {x: 160, y: 200},
+                {x: 120, y: 200},
+                {x: 80, y: 200},
+                {x: 40, y: 200},
+            ]
+            changing_direction = false
+            //moving left when starts
+            dx = 40;
+            dy = 0;
+            //starts the game
+            if(runGame){
+                console.log('the game runs')
+                main()
+            }
+    }
+
     const main = () => {
 
         //if (game_end()) return;
@@ -264,38 +299,19 @@ window.onload = function (){
     }
     
 
+
     document.addEventListener("keydown", change_direction);
 
+    //starting game by mouseclick
     canvas.addEventListener('click', function(evt){
         var mousePos = getMousePos(canvas, evt)
 
         if (!runGame && isInside(mousePos,rect)) {
-            clearCanvas()
-            //Game is running = true
-            points = 0
-            runGame = true
-            console.log(mousePos)
-            console.log(runGame)
-            snake = [
-                {x: 200, y: 200},
-                {x: 160, y: 200},
-                {x: 120, y: 200},
-                {x: 80, y: 200},
-                {x: 40, y: 200},
-            ]
-            changing_direction = false
-            //moving left when starts
-            dx = 40;
-            dy = 0;
-            //starts the game
-            if(runGame){
-                console.log('the game runs')
-                main()
-            }
+            StartGame()
         }
     }, false)
 
-    start_game()
+    mainScreen()
     console.log(runGame)
     if (runGame) {
         main()
